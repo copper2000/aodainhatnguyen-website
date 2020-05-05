@@ -1,0 +1,67 @@
+﻿@model IEnumerable<Model.EF.ProductCategory>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_Layouts.cshtml";
+}
+<div class="container-fluid">
+    <h1 class="mt-4">Quản lý danh mục sản phẩm</h1>
+    <ol class="breadcrumb mb-2">
+        <li class="breadcrumb-item"><a href="/Admin/HomeAdmin">Trang chủ</a></li>
+        <li class="breadcrumb-item active">Quản lý danh mục sản phẩm</li>
+    </ol>
+</div>
+<div class="mb-4">
+   
+    <div class="card-body">
+        <p>
+            <buton class="btn btn-success"><a style="text-decoration: none; color: #fff" href="/Admin/ProductCategory/Create">Tạo mới</a></buton>
+        </p>
+        <div class="table-responsive">
+            <table class="table table-bordered" id="dataTable" width="100" cellspacing="0">
+                <thead>
+                    <tr>
+                        <th>Tên loại áo</th>
+                        <th>Meta Title</th>
+                        <th>Tạo bởi</th>
+                        <th>Trạng thái</th>     
+                        <th>Chức năng</th>                  
+                    </tr>
+                </thead>
+                <tfoot>
+                    <tr>
+                        <th>Tên loại áo</th>
+                        <th>Meta Title</th>
+                        <th>Tạo bởi</th>
+                        <th>Trạng thái</th>
+                        <th>Chức năng</th>                  
+                    </tr>                
+                </tfoot>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Name)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.MetaTitle)
+                            </td>                            
+                            <td>
+                                @Html.DisplayFor(modelItem => item.CreateBy)
+                            </td>                            
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Status)
+                            </td>                           
+                            <td>                                
+                                <a type="button" title="Sửa" class="btn btn-sm btn-warning" href="/Admin/ProductCategory/Edit/@item.ID"><i class="far fa-edit"></i></a> &nbsp;                    
+                                <a type="button" title="Xóa" class="btn btn-sm btn-danger" href="/Admin/ProductCategory/Delete/@item.ID"><i class="fas fa-trash"></i></a>                                   
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+</div>

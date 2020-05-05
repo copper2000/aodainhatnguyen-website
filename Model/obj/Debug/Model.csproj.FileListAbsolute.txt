@@ -1,0 +1,10 @@
+C:\Users\NGUYEN\Desktop\AdminAPI_AodaiNhatNguyen\Model\bin\Debug\Model.dll
+C:\Users\NGUYEN\Desktop\AdminAPI_AodaiNhatNguyen\Model\bin\Debug\Model.pdb
+C:\Users\NGUYEN\Desktop\AdminAPI_AodaiNhatNguyen\Model\obj\Debug\Model.csprojResolveAssemblyReference.cache
+C:\Users\NGUYEN\Desktop\AdminAPI_AodaiNhatNguyen\Model\obj\Debug\Model.dll
+C:\Users\NGUYEN\Desktop\AdminAPI_AodaiNhatNguyen\Model\obj\Debug\Model.pdb
+C:\Users\NGUYEN\Desktop\AdminAPI_AodaiNhatNguyen\Model\bin\Debug\Model.dll.config
+C:\Users\NGUYEN\Desktop\AdminAPI_AodaiNhatNguyen\Model\bin\Debug\EntityFramework.dll
+C:\Users\NGUYEN\Desktop\AdminAPI_AodaiNhatNguyen\Model\bin\Debug\EntityFramework.SqlServer.dll
+C:\Users\NGUYEN\Desktop\AdminAPI_AodaiNhatNguyen\Model\bin\Debug\EntityFramework.xml
+C:\Users\NGUYEN\Desktop\AdminAPI_AodaiNhatNguyen\Model\bin\Debug\EntityFramework.SqlServer.xml

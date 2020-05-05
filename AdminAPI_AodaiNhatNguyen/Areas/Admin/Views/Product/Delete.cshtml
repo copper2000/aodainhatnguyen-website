@@ -1,0 +1,62 @@
+﻿@model Model.EF.Product
+
+@{
+    ViewBag.Title = "Delete";
+    Layout = "~/Areas/Admin/Views/Shared/_Layouts.cshtml";
+}
+
+<div>
+    <br />
+    <div class="container-fluid">
+        <div class="card mb-4">
+            <div class="card-body bg-danger"><h3 style="color: white">Bạn có chắc chắn muốn xóa bản ghi này?</h3></div>
+        </div>
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-bordered" id="dataTable" width="100" cellspacing="0">
+                <thead>
+                    <tr>
+                        <th>Sản phẩm</th>
+                        <th>Mã sản phẩm</th>
+                        <th>Mô tả</th>
+                        <th>Ảnh</th>
+                        <th>Giá</th>
+                        <th>Giá KM</th>
+                        <th>VAT</th>
+                        <th>Số lượng</th>
+                        <th>Danh mục</th>
+                        <th>Chi tiết</th>
+                        <th>Còn hàng</th>
+                        <th>Sản phẩm hot</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>@Html.DisplayFor(model => model.Name)</td>
+                        <td>@Html.DisplayFor(model => model.Code)</td>
+                        <td>@Html.DisplayFor(model => model.Description)</td>
+                        <td>@Html.DisplayFor(model => model.Image)</td>
+                        <td>@Html.DisplayFor(model => model.Price)</td>
+                        <td>@Html.DisplayFor(model => model.PromotionPrice)</td>
+                        <td>@Html.DisplayFor(model => model.IncludeVAT)</td>
+                        <td>@Html.DisplayFor(model => model.Quantity)</td>
+                        <td>@Html.DisplayFor(model => model.CategoryID)</td>
+                        <td>@Html.DisplayFor(model => model.Detail)</td>
+                        <td>@Html.DisplayFor(model => model.Status)</td>
+                        <td>@Html.DisplayFor(model => model.TopHot)</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+
+            <div class="form-actions no-color">
+                <input type="submit" value="Xóa" class="btn btn-danger" /> |
+                @Html.ActionLink("Trở về trang quản lý", "Index")
+            </div>
+        }
+    </div>
+</div>

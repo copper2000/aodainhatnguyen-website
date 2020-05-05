@@ -1,0 +1,47 @@
+﻿@model Model.EF.ProductCategory
+
+@{
+    ViewBag.Title = "Delete";
+    Layout = "~/Areas/Admin/Views/Shared/_Layouts.cshtml";
+}
+
+<div>
+    <br />
+    <div class="container-fluid">
+        <div class="card mb-4">
+            <div class="card-body bg-danger"><h3 style="color: white">Bạn có chắc chắn muốn xóa bản ghi này?</h3></div>
+        </div>
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-bordered" id="dataTable" width="100" cellspacing="0">
+                <thead>
+                    <tr>
+                        <th>Tên danh mục</th>
+                        <th>Meta Title</th>
+                        <th>Tạo bởi</th>
+                        <th>Trạng thái</th>                       
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>@Html.DisplayFor(model => model.Name)</td>
+                        <td>@Html.DisplayFor(model => model.MetaTitle)</td>
+                        <td>@Html.DisplayFor(model => model.CreateBy)</td>
+                        <td>@Html.DisplayFor(model => model.Status)</td>                       
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+
+            <div class="form-actions no-color">
+                <input type="submit" value="Xóa" class="btn btn-danger" /> |
+                @Html.ActionLink("Trở về trang quản lý", "Index")
+            </div>
+        }
+    </div>
+</div>
+

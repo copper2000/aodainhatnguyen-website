@@ -1,0 +1,127 @@
+﻿@{
+    ViewBag.Title = "Quản lý người dùng";
+    Layout = "~/Areas/Admin/Views/Shared/_Layouts.cshtml";
+}
+
+@using System.Globalization
+@using PagedList.Mvc
+@model PagedList.IPagedList<Model.EF.User>
+
+<style>
+    a:hover {
+        color: #74787C;
+    }
+</style>
+<link href="~/Assets/Admin/css/PagedList.css" rel="stylesheet" type="text/css" />
+<script>
+    document.querySelector('[name="pageSize"]').onchange = function () {
+        document.querySelector('form').submit();
+    }
+
+    document.querySelector('[name="locale"]').onchange = function () {
+        document.querySelector('form').submit();
+    }
+</script>
+
+<main>
+    <div class="container-fluid">
+        <h1 class="mt-4">Quản lý người dùng</h1>
+        <ol class="breadcrumb mb-4">
+            <li class="breadcrumb-item"><a href="/Admin/HomeAdmin">Trang chủ</a></li>
+            <li class="breadcrumb-item active">Quản lý người dùng</li>
+        </ol>
+        <form action="/Admin/User/Index" method="get">
+            <div class="form-group row">
+                <div class="col-sm-6">
+                    <input type="text" placeholder="Tìm kiếm bản ghi..." name="search" class="form-control ml-3" value="@Request["search"]">
+                </div>
+                <div class="col-sm-6">
+                    <button type="submit" class="btn btn-primary">Tìm kiếm</button>
+                </div>
+            </div>            
+        </form>  <br />
+        <div class="card mb-4">
+            <div class="card-header"><i class="fas fa-table mr-1"></i>Bảng quản lý người dùng</div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <p>
+                        <buton class="btn btn-success"><a style="text-decoration: none; color: #fff" href="/Admin/User/Create">Tạo mới</a></buton>
+                    </p>
+                    <table class="table table-bordered" id="dataTable" width="100" cellspacing="0">
+                        <thead>
+                            <tr>
+                                <th><a style="text-decoration: none" href="/Admin/User/Index?pageNumber=@(Request["pageNumber"]==null ? "1" : Request["pageNumber"])&pageSize=@(Request["pageSize"]==null ? "6" : Request["pageSize"])&sort=@(Request["sort"]=="asc" ? "desc" : "asc")&search=@Request["search"]&order=UserName">Tên đăng nhập</a></th>
+                                <th><a style="text-decoration: none" href="/Admin/User/Index?pageNumber=@(Request["pageNumber"]==null ? "1" : Request["pageNumber"])&pageSize=@(Request["pageSize"]==null ? "6" : Request["pageSize"])&sort=@(Request["sort"]=="asc" ? "desc" : "asc")&search=@Request["search"]&order=Name">Họ và tên</a></th>
+                                <th>Địa chỉ</th>
+                                <th>Email</th>
+                                <th>Phone</th>
+                                <th><a style="text-decoration: none" href="/Admin/User/Index?pageNumber=@(Request["pageNumber"]==null ? "1" : Request["pageNumber"])&pageSize=@(Request["pageSize"]==null ? "6" : Request["pageSize"])&sort=@(Request["sort"]=="asc" ? "desc" : "asc")&search=@Request["search"]&order=CreateDate">Ngày tạo</a></th>
+                                <th>Chức năng</th>
+                            </tr>
+                        </thead>
+                        <tfoot>
+                            <tr>
+                                <th><a style="text-decoration: none" href="/Admin/User/Index?pageNumber=@(Request["pageNumber"]==null ? "1" : Request["pageNumber"])&pageSize=@(Request["pageSize"]==null ? "6" : Request["pageSize"])&sort=@(Request["sort"]=="asc" ? "desc" : "asc")&search=@Request["search"]&order=UserName">Tên đăng nhập</a></th>
+                                <th><a style="text-decoration: none" href="/Admin/User/Index?pageNumber=@(Request["pageNumber"]==null ? "1" : Request["pageNumber"])&pageSize=@(Request["pageSize"]==null ? "6" : Request["pageSize"])&sort=@(Request["sort"]=="asc" ? "desc" : "asc")&search=@Request["search"]&order=Name">Họ và tên</a></th>
+                                <th>Địa chỉ</th>
+                                <th>Email</th>
+                                <th>Phone</th>
+                                <th><a style="text-decoration: none" href="/Admin/User/Index?pageNumber=@(Request["pageNumber"]==null ? "1" : Request["pageNumber"])&pageSize=@(Request["pageSize"]==null ? "6" : Request["pageSize"])&sort=@(Request["sort"]=="asc" ? "desc" : "asc")&search=@Request["search"]&order=CreateDate">Ngày tạo</a></th>
+                                <th>Chức năng</th>
+                            </tr>
+                        </tfoot>
+
+                        @foreach (var item in Model)
+                        {
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.UserName)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Name)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Address)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Email)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Phone)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.CreateDate)
+                                    </td>
+                                    <td>
+                                        <a type="button" title="Sửa" class="btn btn-sm btn-warning" href="/Admin/User/Edit/@item.ID"><i class="far fa-edit"></i></a>                                    
+                                        <a type="button" title="Xóa" class="btn btn-sm btn-danger" href="/Admin/User/Delete/@item.ID"><i class="fas fa-trash"></i></a>                                   
+                                    </td>
+                                </tr>
+                            </tbody>
+                        }
+
+                    </table>
+                    Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+                    @Html.PagedListPager(
+                            Model,
+                            pageNumber => Url.Action(
+                                "Index",
+                                new
+                                {
+                                    pageNumber,
+                                    pageSize = Request["pageSize"],
+                                    search = Request["search"],
+                                    order = Request["order"],
+                                    sort = Request["sort"]
+                                }
+                            )
+                   )
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+
+

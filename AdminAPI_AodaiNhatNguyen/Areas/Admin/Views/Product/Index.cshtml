@@ -1,0 +1,137 @@
+﻿@using PagedList.Mvc
+@model PagedList.IPagedList<Model.EF.Product>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_Layouts.cshtml";
+}
+
+<style>
+    a:hover {
+        color: #74787C;
+    }
+</style>
+<link href="~/Assets/Admin/css/PagedList.css" rel="stylesheet" type="text/css" />
+<script>
+    document.querySelector('[name="pageSize"]').onchange = function () {
+        document.querySelector('form').submit();
+    }
+
+    document.querySelector('[name="locale"]').onchange = function () {
+        document.querySelector('form').submit();
+    }
+</script>
+
+<main>
+    <div class="container-fluid">
+        <h1 class="mt-4">Quản lý sản phẩm</h1>
+        <ol class="breadcrumb mb-4">
+            <li class="breadcrumb-item"><a href="index.html">Dashboard</a></li>
+            <li class="breadcrumb-item active">Tables</li>
+        </ol>
+        <form action="/Admin/Product/Index" method="get">
+            <div class="form-group row">
+                <div class="col-sm-6">
+                    <input type="text" placeholder="Tìm kiếm sản phẩm..." name="search" class="form-control ml-3" value="@Request["search"]">
+                </div>
+                <div class="col-sm-6">
+                    <button type="submit" class="btn btn-primary">Tìm kiếm</button>
+                </div>
+            </div>
+        </form>  <br />
+        <div class="card mb-4">
+            <div class="card-header"><i class="fas fa-table mr-1"></i>Bảng quản lý sản phẩm</div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <p>
+                        <buton class="btn btn-success"><a style="text-decoration: none; color: #fff" href="/Admin/Product/Create">Tạo mới</a></buton>
+                    </p>
+                    <table class="table table-bordered" id="dataTable" width="100" cellspacing="0">
+                        <thead>
+                            <tr>
+                                <th><a style="text-decoration: none" href="/Admin/Product/Index?pageNumber=@(Request["pageNumber"]==null ? "1" : Request["pageNumber"])&pageSize=@(Request["pageSize"]==null ? "3" : Request["pageSize"])&sort=@(Request["sort"]=="asc" ? "desc" : "asc")&search=@Request["search"]&order=UserName">Sản phẩm</a></th>
+                                <th>Mã sản phẩm</th>                         
+                                <th>Mô tả</th>
+                                <th>Ảnh</th>
+                                <th><a style="text-decoration: none" href="/Admin/Product/Index?pageNumber=@(Request["pageNumber"]==null ? "1" : Request["pageNumber"])&pageSize=@(Request["pageSize"]==null ? "3" : Request["pageSize"])&sort=@(Request["sort"]=="asc" ? "desc" : "asc")&search=@Request["search"]&order=Price">Giá</a></th>
+                                <th>Giá KM</th>
+                                <th>VAT</th>
+                                <th><a style="text-decoration: none" href="/Admin/Product/Index?pageNumber=@(Request["pageNumber"]==null ? "1" : Request["pageNumber"])&pageSize=@(Request["pageSize"]==null ? "3" : Request["pageSize"])&sort=@(Request["sort"]=="asc" ? "desc" : "asc")&search=@Request["search"]&order=Quantity">Số lượng</a></th>
+                                <th>Danh mục</th>
+                                <th>Chi tiết</th>
+                                <th>Còn hàng</th>
+                                <th>Sản phẩm hot</th>
+                                <th>Chức năng</th>
+                            </tr>
+                        </thead>                       
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Name)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Code)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Description)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Image)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Price)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.PromotionPrice)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.IncludeVAT)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Quantity)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.CategoryID)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Detail)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Status)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.TopHot)
+                                    </td>
+                                    <td>
+                                        <a type="button" title="Sửa" class="btn btn-sm btn-warning" href="/Admin/Product/Edit/@item.ID"><i class="far fa-edit"></i></a> &nbsp;
+                                        <a type="button" title="Xóa" class="btn btn-sm btn-danger" href="/Admin/Product/Delete/@item.ID"><i class="fas fa-trash"></i></a>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                    Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+                    @Html.PagedListPager(
+                                Model,
+                                pageNumber => Url.Action(
+                                     "Index",
+                                     new
+                                     {
+                                         pageNumber,
+                                         pageSize = Request["pageSize"],
+                                         search = Request["search"],
+                                         order = Request["order"],
+                                         sort = Request["sort"]
+                                     }
+                                )
+                            )
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+
+
+
